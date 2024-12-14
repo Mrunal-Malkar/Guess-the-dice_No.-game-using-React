@@ -1,13 +1,49 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState,useRef} from 'react';
 import "./game_page.css"
 
 const Game_page = () => {
 
+  let dicedisplay=useRef();
   const [numberChoose, setNumberChoosed] = useState(0);
+  const[dicestate,setDicestate]=useState("dicestart");
+  const[totalscore,setTotalScore]=useState(0);
 
-  console.log(numberChoose)
-  let dice=[1,2,3,4,5,6];
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+  let randomchoice=getRandomInt(6)+1;
+  let dice = [1, 2, 3, 4, 5, 6];
+  let dicepic={
+    1:"./dice_one.png",
+    2:"./dice_two.webp",
+    3:"./dice_three.png",
+    4:"./dice_four.svg",
+    5:"./dice_five.webp",
+    6:"./dice_six.webp",
+  }
+
+  const Handlestart=()=>{
+    if(numberChoose!=0){
+    console.log(dicedisplay.current)
+    console.log(randomchoice);
+    setDicestate("diceanimate");
+    setTimeout(() => {
+      setDicestate("dicestart")
+    },5000);
+    setTimeout(()=>{
+      setDicestate("gotit")
+      dicedisplay.current.style.backgroundImage=`url(${dicepic[randomchoice]})`
+    },5000);
+    if(randomchoice==numberChoose){
+      setTotalScore(totalscore+1);
+    }}
+  };
+
+  const Handlereset=()=>{
+    setTotalScore(0);
+  }
 
   return (
     <div className='h-screen'>
@@ -15,37 +51,36 @@ const Game_page = () => {
         <div className='w-full h-2/4 flex justify-between'>
           <div className='w-1/2 text-3xl p-2 ms-1 mt-1 flex justify-start'>
             <h1>Total score:</h1>
-            <p className='ms-2 text-4xl'>0</p>
+            <p className='ms-2 text-4xl'>{totalscore}</p>
           </div>
           <div className='w-1/2 flex '>
-            <button className='img1 w-1/6 h-2/4 flex align-middle justify-center bg-slate-500 border-2 p-2 mt-1 rounded-sm  text-5xl' onClick={(e) => {
-              setNumberChoosed(e.currentTarget.value)
-            }} value={1}><p className='flex self-center'>1</p></button>
-            <button className='img2 w-1/6 h-2/4 flex align-middle justify-center bg-slate-500 border-2 p-2 mt-1 rounded-sm  text-5xl' onClick={(e) => {
-              setNumberChoosed(e.currentTarget.value)
-            }} value={2}><p className='flex self-center'>2</p></button>
-            <button className='img3 w-1/6 h-2/4 flex align-middle justify-center bg-slate-500 border-2 p-2 mt-1 rounded-sm  text-5xl' onClick={(e) => {
-              setNumberChoosed(e.currentTarget.value)
-            }} value={3}><p className='flex self-center'>3</p></button>
-            <button className='img4 w-1/6 h-2/4 flex align-middle justify-center bg-slate-500 border-2 p-2 mt-1 rounded-sm  text-5xl' onClick={(e) => {
-              setNumberChoosed(e.currentTarget.value)
-            }} value={4}><p className='flex self-center'>4</p></button>
-            <button className='img5 w-1/6 h-2/4  flex align-middle justify-center bg-slate-500 border-2 p-2 mt-1 rounded-sm text-5xl' onClick={(e) => {
-              setNumberChoosed(e.currentTarget.value)
-            }} value={5}><p className='flex self-center'>5</p></button>
-            <button className='img6 w-1/6 h-2/4 flex align-middle justify-center bg-slate-500 border-2 p-2 mt-1 rounded-sm  text-5xl' onClick={(e) => {
-              setNumberChoosed(e.currentTarget.value)
-            }} value={6}><p className='flex self-center'>6</p></button>
+            {dice.map((value, i) => (
+              <button
+                style={{ backgroundColor: value==numberChoose ? "white" :"" }}
+                key={value} className='buttonNumbers w-1/6 h-2/4 flex align-middle justify-center bg-slate-500 border-2 p-2 mt-1 rounded-xl text-5xl' onClick={() => {
+                  setNumberChoosed(value)
+                }}><p className='flex self-center'>{value}</p></button>))
+            }
           </div>
         </div>
         <div className='w-full h-2/4 flex justify-center align-bottom'>
-          <div className='w-1/5 h-2 dicestart'>ddfsdf</div>
+          <div className={`w-56 h-full ${dicestate}`}ref={dicedisplay}></div>
         </div>
       </div>
       <div className='w-full h-2/4 bg-red-400'>
-        <div className='w-full h-2/4'>
+        <div className='w-full h-2/4 flex justify-center align-top'>
+        <div className='flex justify-between w-56 h-2/6'>
+          <button className='text-xl bg-cyan-700 p-2 w-2/4 h-full'onClick={Handlestart}>Start</button>
+          <button className='text-xl bg-cyan-700 p-2 w-2/4 h-full'onClick={Handlereset}>Reset</button>
         </div>
-        <div className='w-full h-2/4'>
+        </div>
+        <div className='w-full h-2/4 flex align-bottom'>
+        <div className='w-2/12 self-end flex align-bottom flex-col'>
+        <ol className='mb-4 ms-2 bg-gray-400'>
+        <h1>Instruction:</h1>
+          <li>Please select the number to get started.</li>
+        </ol>
+        </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,27 @@
+*{
+    transition-timing-function:steps(1);
+}
+.dicestart{
+    background-image: url("./dice_three.png");
+}
+button:focus{
+    background-color: white;
+}
+.diceanimate{
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation-timing-function:steps(6);
+    animation:animetethedice 5s infinite;
+}
+.gotit{
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+@keyframes animetethedice{
+    0%{background-image:url("./dice_four.svg");}
+    20%{background-image:url("./dice_one.png");}
+    40%{background-image:url("./dice_six.webp");}
+    60%{background-image:url("./dice_three.png");}
+    80%{background-image:url("./dice_one.png");}
+    100%{background-image:url("./dice_five.webp");}
+}
