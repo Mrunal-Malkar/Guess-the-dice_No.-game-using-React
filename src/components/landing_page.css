@@ -1,0 +1,23 @@
+*{
+    margin:0px;
+    padding:0px;
+}
+
+.hero{
+    height: 100vh;
+    width:100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heroimage{
+    background-image: url("hero-img.webp");
+    background-size: contain;
+    background-repeat:no-repeat;
+}
+
+.sidegif{
+    background-image:url("https://medium.com/dartmouth-cs98/boost-your-productivity-with-a-playful-twist-meet-the-productivity-panda-8948064445e2");
+
+}
